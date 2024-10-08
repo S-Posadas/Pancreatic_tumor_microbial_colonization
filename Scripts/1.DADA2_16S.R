@@ -3,13 +3,6 @@
 
 #### Package setup ####
 
-#if (!requireNamespace("BiocManager", quietly = TRUE))
-#  install.packages("BiocManager")
-#BiocManager::install("dada2")
-#install.packages("remotes")
-#remotes::install_github("jfq3/ggordiplots")
-#remotes::install_github("kstagaman/phyloseqCompanion")
-
 Sys.setenv(language = "EN")
 library(dada2); packageVersion("dada2")
 library(vegan)
@@ -29,7 +22,7 @@ list.files(path)
 
 # Create directories to save results of the analysis 
 
-res.dir <- "Results_check"
+res.dir <- "Results"
 qc.dir <- file.path(res.dir, "1.QC")
 R.dir <- file.path(res.dir, "RData")
 
