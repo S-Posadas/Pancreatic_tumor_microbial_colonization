@@ -31,7 +31,7 @@ dir.create(a.plots, recursive = T)
 
 #### Check that the variables have the right class ####
 
-# Change Sepsis column values
+# Change column values
 sample_data(physeq) <- data.frame(sample_data(physeq)) %>%
   mutate(Sepsis = ifelse(Sepsis == 1, "Yes", ifelse(Sepsis == 2, "No", Sepsis)))
 sample_data(physeq) <- data.frame(sample_data(physeq)) %>%
@@ -40,13 +40,12 @@ sample_data(physeq)$ClavienDindo_simple = gsub("a", "", sample_data(physeq)$Clav
 
 sapply(sample_data(physeq), class)
 
-cols.chr <- c("Culture_growth", "Sex", "venresek", "Postoperative_gastric_emptying_disorder", "PPH_B_C",
-              "POPF", "Burst_abdomen", "Urinary_tract_infection", "Thromboembolism", "Abscess", "Pneumonia",
-              "Reintubation",	"Sepsis",	"Renal_insufficiency",	"Postoperative_surgery",	"Postoperative_intervention",
-              "R.Stage", "T.Stage",	"N.Stage",	"Tumor.positive_lymph_nodes",	"Removed_lymph_nodes",	"Vascular_infiltration",
-              "Lymphvascular_infiltration",	"Perineural_sheath_infiltration",	"M.Stage", "ClavienDindo_simple")
+# Transform all variables to factors in phyloseq object 
+df <- as.data.frame(lapply(sample_data(physeq),function (y) if(class(y)!="factor" ) as.factor(y) else y),stringsAsFactors=T)
+row.names(df) <- sample_names(physeq)
+sample_data(physeq) <- sample_data(df)
 
-sample_data(physeq)[,cols.chr] <- sapply(sample_data(physeq)[,cols.chr],as.factor)
+sapply(sample_data(physeq), class)                           
 
 #### End ####
 
